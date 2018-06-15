@@ -3,6 +3,8 @@ package org.optaplanner.experiment.stream.impl.bavet;
 import java.util.List;
 
 import org.optaplanner.experiment.stream.impl.ConstraintStreamingSession;
+import org.optaplanner.experiment.stream.impl.bavet.uni.BavetSelectConstraintStream;
+import org.optaplanner.experiment.stream.impl.bavet.uni.BavetSelectConstraintStreaming;
 
 public class BavetConstraintStreamingSession implements ConstraintStreamingSession {
 

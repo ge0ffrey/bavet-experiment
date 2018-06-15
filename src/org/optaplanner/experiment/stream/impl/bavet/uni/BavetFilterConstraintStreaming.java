@@ -1,4 +1,4 @@
-package org.optaplanner.experiment.stream.impl.bavet;
+package org.optaplanner.experiment.stream.impl.bavet.uni;
 
 import java.util.function.Predicate;
 

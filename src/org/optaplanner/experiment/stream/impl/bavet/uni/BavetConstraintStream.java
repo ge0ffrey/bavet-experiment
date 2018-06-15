@@ -1,12 +1,15 @@
-package org.optaplanner.experiment.stream.impl.bavet;
+package org.optaplanner.experiment.stream.impl.bavet.uni;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
-import org.optaplanner.experiment.stream.BiConstraintStream;
-import org.optaplanner.experiment.stream.ConstraintStream;
+import org.optaplanner.experiment.stream.api.bi.BiConstraintStream;
+import org.optaplanner.experiment.stream.api.bi.BiJoiner;
+import org.optaplanner.experiment.stream.impl.bavet.BavetConstraintStreamFactory;
+import org.optaplanner.experiment.stream.impl.bavet.BavetConstraintStreamingSession;
+import org.optaplanner.experiment.stream.api.uni.ConstraintStream;
 
 public abstract class BavetConstraintStream<A> implements ConstraintStream<A> {
 
@@ -25,7 +28,7 @@ public abstract class BavetConstraintStream<A> implements ConstraintStream<A> {
     }
 
     @Override
-    public <B> BiConstraintStream<A, B> join(ConstraintStream<B> other, BiPredicate<A, B> predicate) {
+    public <B, C> BiConstraintStream<A, B> join(ConstraintStream<B> other, BiJoiner<A, B, C> joiner) {
         throw new UnsupportedOperationException(); // TODO
     }
 

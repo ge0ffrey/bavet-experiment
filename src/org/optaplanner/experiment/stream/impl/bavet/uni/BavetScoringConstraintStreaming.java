@@ -1,4 +1,6 @@
-package org.optaplanner.experiment.stream.impl.bavet;
+package org.optaplanner.experiment.stream.impl.bavet.uni;
+
+import org.optaplanner.experiment.stream.impl.bavet.BavetConstraintStreamingSession;
 
 public class BavetScoringConstraintStreaming<A> extends BavetConstraintStreaming<A> {
 

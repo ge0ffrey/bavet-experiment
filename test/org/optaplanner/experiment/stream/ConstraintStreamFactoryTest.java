@@ -4,6 +4,8 @@ import org.junit.Test;
 import org.optaplanner.experiment.example.Person;
 import org.optaplanner.experiment.example.Shift;
 import org.optaplanner.experiment.example.Unavailability;
+import org.optaplanner.experiment.stream.api.ConstraintStreamFactory;
+import org.optaplanner.experiment.stream.api.bi.BiJoiner;
 import org.optaplanner.experiment.stream.impl.ConstraintStreamingSession;
 import org.optaplanner.experiment.stream.impl.InnerConstraintStreamFactory;
 import org.optaplanner.experiment.stream.impl.bavet.BavetConstraintStreamFactory;
@@ -22,11 +24,10 @@ public class ConstraintStreamFactoryTest {
 
 //        factory.select(Shift.class)
 //                .filter(shift -> shift.getPersonName() != null)
-//                .join(factory.select(Unavailability.class),
-//                        (shift, unavailability) -> shift.getPersonName().equals(unavailability.getName())
-//                        && shift.getTime() >= unavailability.getTimeStart()
+//                .join(factory.select(Unavailability.class), BiJoiner.equals(Shift::getPersonName, Unavailability::getName))
+//                .filter((shift, unavailability) -> shift.getTime() >= unavailability.getTimeStart()
 //                        && shift.getTime() < unavailability.getTimeEnd())
-//                .forEachMatch("Check unavailability");
+//                .scoreEachMatch("Unavailable person");
 
         ConstraintStreamingSession session = ((InnerConstraintStreamFactory) factory).buildSession();
 

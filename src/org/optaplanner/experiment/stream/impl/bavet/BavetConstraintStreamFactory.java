@@ -3,7 +3,8 @@ package org.optaplanner.experiment.stream.impl.bavet;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.optaplanner.experiment.stream.ConstraintStream;
+import org.optaplanner.experiment.stream.impl.bavet.uni.BavetSelectConstraintStream;
+import org.optaplanner.experiment.stream.api.uni.ConstraintStream;
 import org.optaplanner.experiment.stream.impl.ConstraintStreamingSession;
 import org.optaplanner.experiment.stream.impl.InnerConstraintStreamFactory;
 

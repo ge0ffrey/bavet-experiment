@@ -1,6 +1,9 @@
-package org.optaplanner.experiment.stream.impl.bavet;
+package org.optaplanner.experiment.stream.impl.bavet.uni;
 
 import java.util.function.Predicate;
+
+import org.optaplanner.experiment.stream.impl.bavet.BavetConstraintStreamFactory;
+import org.optaplanner.experiment.stream.impl.bavet.BavetConstraintStreamingSession;
 
 public class BavetFilterConstraintStream<A> extends BavetConstraintStream<A> {
 
