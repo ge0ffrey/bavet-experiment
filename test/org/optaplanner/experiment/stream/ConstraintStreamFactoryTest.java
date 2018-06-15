@@ -16,9 +16,9 @@ public class ConstraintStreamFactoryTest {
     public void insertSOnly() {
         ConstraintStreamFactory factory = new BavetConstraintStreamFactory();
 
-        factory.select(Person.class)
-                .filter(person -> !person.getName().equals("Carl"))
-                .scoreEachMatch("Ladies first");
+        factory.select(Shift.class)
+                .filter(shift -> shift.getPersonName() != null && shift.getPersonName().equals("Beth"))
+                .scoreEachMatch("Don't assign Beth");
 
 //        factory.select(Shift.class)
 //                .filter(shift -> shift.getPersonName() != null)
@@ -30,23 +30,26 @@ public class ConstraintStreamFactoryTest {
 
         ConstraintStreamingSession session = ((InnerConstraintStreamFactory) factory).buildSession();
 
-        Person ann = new Person("Ann");
-        session.insert(ann);
+        session.insert(new Person("Ann"));
         session.insert(new Person("Beth"));
         session.insert(new Person("Carl"));
         session.insert(new Person("Dora"));
-        session.insert(new Shift(1, null));
-        session.insert(new Shift(1, "Ann"));
-        session.insert(new Shift(2, "Beth"));
-        session.insert(new Shift(2, "Beth"));
-        session.insert(new Shift(3, "Carl"));
         session.insert(new Unavailability("Carl", 2, 4));
         session.insert(new Unavailability("Dora", 2, 4));
+        Shift a = new Shift(1, null);
+        session.insert(a);
+        Shift b = new Shift(1, "Ann");
+        session.insert(b);
+        Shift c = new Shift(2, "Beth");
+        session.insert(c);
+        Shift d = new Shift(2, "Beth");
+        session.insert(d);
+        Shift e = new Shift(3, "Carl");
+        session.insert(e);
 
-        assertEquals(-3L, session.calculateScore());
-        session.retract(ann);
         assertEquals(-2L, session.calculateScore());
-
+        session.retract(c);
+        assertEquals(-1L, session.calculateScore());
     }
 
 }
