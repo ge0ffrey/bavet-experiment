@@ -21,7 +21,7 @@ public class BavetFilterConstraintStream<A> extends BavetConstraintStream<A> {
             throw new IllegalStateException("The stream (" + this + ") leads to nowhere.\n"
                     + "Maybe don't create it.");
         }
-        return new BavetFilterConstraintStreaming<A>(predicate, nextStreaming);
+        return new BavetFilterConstraintStreaming<>(predicate, nextStreaming);
     }
 
 }

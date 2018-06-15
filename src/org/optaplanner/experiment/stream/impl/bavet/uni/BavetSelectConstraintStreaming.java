@@ -12,17 +12,17 @@ public class BavetSelectConstraintStreaming<A> extends BavetConstraintStreaming<
 
     @SuppressWarnings("unchecked")
     @Override
-    public void insert(Object fact) {
-        if (selectClass.isInstance(fact)) {
-            nextStreaming.insert((A) fact);
+    public void insert(Object a) {
+        if (selectClass.isInstance(a)) {
+            nextStreaming.insert((A) a);
         }
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public void retract(Object fact) {
-        if (selectClass.isInstance(fact)) {
-            nextStreaming.retract((A) fact);
+    public void retract(Object a) {
+        if (selectClass.isInstance(a)) {
+            nextStreaming.retract((A) a);
         }
     }
 

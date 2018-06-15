@@ -13,15 +13,15 @@ public class BavetFilterConstraintStreaming<A> extends BavetConstraintStreaming<
     }
 
     @Override
-    public void insert(A fact) {
-        if (predicate.test(fact)) {
-            nextStreaming.insert(fact);
+    public void insert(A a) {
+        if (predicate.test(a)) {
+            nextStreaming.insert(a);
         }
     }
 
-    public void retract(A fact) {
-        if (predicate.test(fact)) {
-            nextStreaming.retract(fact);
+    public void retract(A a) {
+        if (predicate.test(a)) {
+            nextStreaming.retract(a);
         }
     }
 

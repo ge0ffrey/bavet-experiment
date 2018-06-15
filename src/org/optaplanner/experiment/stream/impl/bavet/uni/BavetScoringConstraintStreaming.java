@@ -13,11 +13,11 @@ public class BavetScoringConstraintStreaming<A> extends BavetConstraintStreaming
     }
 
     @Override
-    public void insert(A fact) {
+    public void insert(A a) {
         session.removeScore(1L);
     }
 
-    public void retract(A fact) {
+    public void retract(A a) {
         session.addScore(1L);
     }
 
