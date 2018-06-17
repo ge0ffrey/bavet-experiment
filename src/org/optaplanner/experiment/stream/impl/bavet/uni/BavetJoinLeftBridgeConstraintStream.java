@@ -5,7 +5,6 @@ import java.util.function.Function;
 
 import org.optaplanner.experiment.stream.impl.bavet.BavetConstraintStreamFactory;
 import org.optaplanner.experiment.stream.impl.bavet.BavetConstraintStreamingSession;
-import org.optaplanner.experiment.stream.impl.bavet.bi.BavetBiConstraintStreaming;
 import org.optaplanner.experiment.stream.impl.bavet.bi.BavetJoinBiConstraintStream;
 import org.optaplanner.experiment.stream.impl.bavet.bi.BavetJoinBiConstraintStreaming;
 
@@ -22,7 +21,7 @@ public class BavetJoinLeftBridgeConstraintStream<A, B, R> extends BavetConstrain
     }
 
     @Override
-    protected BavetJoinBridgeConstraintStreaming<A, R> buildStreamingToNext(
+    protected BavetJoinLeftBridgeConstraintStreaming<A, B, R> buildStreamingToNext(
             BavetConstraintStreamingSession session, Map<Object, Object> mergeLinkMap,
             BavetConstraintStreaming<A> nextStreaming) {
         if (nextStreaming != null) {
@@ -34,10 +33,10 @@ public class BavetJoinLeftBridgeConstraintStream<A, B, R> extends BavetConstrain
             biStreaming = (BavetJoinBiConstraintStreaming<A, B, R>) biStream.buildStreaming(session, mergeLinkMap);
             mergeLinkMap.put(biStream, biStreaming);
         }
-        BavetJoinBridgeConstraintStreaming<A, R> stream = new BavetJoinBridgeConstraintStreaming<>(
-                biStreaming::insertLeft, biStreaming::retractLeft, mapping);
-        biStreaming.setLeftParentStreaming(stream);
-        return stream;
+        BavetJoinLeftBridgeConstraintStreaming<A, B, R> streaming = new BavetJoinLeftBridgeConstraintStreaming<>(
+                biStreaming, mapping);
+        biStreaming.setLeftParentStreaming(streaming);
+        return streaming;
     }
 
 }

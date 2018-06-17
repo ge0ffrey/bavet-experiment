@@ -4,19 +4,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
-public class BavetJoinBridgeConstraintStreaming<A, R> extends BavetConstraintStreaming<A> {
+import org.optaplanner.experiment.stream.impl.bavet.bi.BavetJoinBiConstraintStreaming;
 
-    private final Consumer<A> nextStreamingInserter;
-    private final Consumer<A> nextStreamingRetracter;
+public class BavetJoinLeftBridgeConstraintStreaming<A, B, R> extends BavetConstraintStreaming<A> {
+
+    private BavetJoinBiConstraintStreaming<A, B, R> biStreaming;
     private final Function<A, R> mapping;
     private final Map<R, List<A>> index;
 
-    public BavetJoinBridgeConstraintStreaming(Consumer<A> nextStreamingInserter, Consumer<A> nextStreamingRetracter, Function<A, R> mapping) {
-        this.nextStreamingInserter = nextStreamingInserter;
-        this.nextStreamingRetracter = nextStreamingRetracter;
+    public BavetJoinLeftBridgeConstraintStreaming(BavetJoinBiConstraintStreaming<A, B, R> biStreaming, Function<A, R> mapping) {
+        this.biStreaming = biStreaming;
         this.mapping = mapping;
         index = new HashMap<>();
     }
@@ -29,7 +28,7 @@ public class BavetJoinBridgeConstraintStreaming<A, R> extends BavetConstraintStr
             throw new IllegalStateException("Impossible situation: the fact (" + a + ") with indexKey (" + indexKey
                     + ") could not be added to the index (" + index.keySet() + ").");
         }
-        nextStreamingInserter.accept(a);
+        biStreaming.insertLeft(a);
     }
 
     public void retract(A a) {
@@ -43,7 +42,7 @@ public class BavetJoinBridgeConstraintStreaming<A, R> extends BavetConstraintStr
         if (indexValueList.isEmpty()) {
             index.remove(indexKey);
         }
-        nextStreamingRetracter.accept(a);
+        biStreaming.retractLeft(a);
     }
 
     public Function<A, R> getMapping() {

@@ -21,7 +21,7 @@ public class BavetJoinRightBridgeConstraintStream<A, B, R> extends BavetConstrai
     }
 
     @Override
-    protected BavetJoinBridgeConstraintStreaming<B, R> buildStreamingToNext(
+    protected BavetJoinRightBridgeConstraintStreaming<A, B, R> buildStreamingToNext(
             BavetConstraintStreamingSession session, Map<Object, Object> mergeLinkMap,
             BavetConstraintStreaming<B> nextStreaming) {
         if (nextStreaming != null) {
@@ -33,10 +33,10 @@ public class BavetJoinRightBridgeConstraintStream<A, B, R> extends BavetConstrai
             biStreaming = (BavetJoinBiConstraintStreaming<A, B, R>) biStream.buildStreaming(session, mergeLinkMap);
             mergeLinkMap.put(biStream, biStreaming);
         }
-        BavetJoinBridgeConstraintStreaming<B, R> stream = new BavetJoinBridgeConstraintStreaming<>(
-                biStreaming::insertRight, biStreaming::retractRight, mapping);
-        biStreaming.setRightParentStreaming(stream);
-        return stream;
+        BavetJoinRightBridgeConstraintStreaming<A, B, R> streaming = new BavetJoinRightBridgeConstraintStreaming<>(
+                biStreaming, mapping);
+        biStreaming.setRightParentStreaming(streaming);
+        return streaming;
     }
 
 }

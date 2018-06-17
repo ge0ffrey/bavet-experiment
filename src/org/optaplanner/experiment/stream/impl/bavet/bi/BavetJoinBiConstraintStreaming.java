@@ -2,23 +2,24 @@ package org.optaplanner.experiment.stream.impl.bavet.bi;
 
 import java.util.List;
 
-import org.optaplanner.experiment.stream.impl.bavet.uni.BavetJoinBridgeConstraintStreaming;
+import org.optaplanner.experiment.stream.impl.bavet.uni.BavetJoinLeftBridgeConstraintStreaming;
+import org.optaplanner.experiment.stream.impl.bavet.uni.BavetJoinRightBridgeConstraintStreaming;
 
 public class BavetJoinBiConstraintStreaming<A, B, R> extends BavetBiConstraintStreaming<A, B> {
 
-    private BavetJoinBridgeConstraintStreaming<A, R> leftParentStreaming;
-    private BavetJoinBridgeConstraintStreaming<B, R> rightParentStreaming;
+    private BavetJoinLeftBridgeConstraintStreaming<A, B, R> leftParentStreaming;
+    private BavetJoinRightBridgeConstraintStreaming<A, B, R> rightParentStreaming;
     private final BavetBiConstraintStreaming<A, B> nextStreaming;
 
     public BavetJoinBiConstraintStreaming(BavetBiConstraintStreaming<A, B> nextStreaming) {
         this.nextStreaming = nextStreaming;
     }
 
-    public void setLeftParentStreaming(BavetJoinBridgeConstraintStreaming<A, R> leftParentStreaming) {
+    public void setLeftParentStreaming(BavetJoinLeftBridgeConstraintStreaming<A, B, R> leftParentStreaming) {
         this.leftParentStreaming = leftParentStreaming;
     }
 
-    public void setRightParentStreaming(BavetJoinBridgeConstraintStreaming<B, R> rightParentStreaming) {
+    public void setRightParentStreaming(BavetJoinRightBridgeConstraintStreaming<A, B, R> rightParentStreaming) {
         this.rightParentStreaming = rightParentStreaming;
     }
 
