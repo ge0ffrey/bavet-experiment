@@ -1,5 +1,7 @@
 package org.optaplanner.experiment.stream.impl.bavet.uni;
 
+import java.util.Map;
+
 import org.optaplanner.experiment.stream.impl.bavet.BavetConstraintStreamFactory;
 import org.optaplanner.experiment.stream.impl.bavet.BavetConstraintStreamingSession;
 
@@ -14,7 +16,8 @@ public class BavetSelectConstraintStream<A> extends BavetConstraintStream<A> {
 
     @Override
     public BavetSelectConstraintStreaming<A> buildStreamingToNext(
-            BavetConstraintStreamingSession session, BavetConstraintStreaming<A> nextStreaming) {
+            BavetConstraintStreamingSession session, Map<Object, Object> mergeLinkMap,
+            BavetConstraintStreaming<A> nextStreaming) {
         if (nextStreaming == null) {
             throw new IllegalStateException("The stream (" + this + ") leads to nowhere.\n"
                     + "Maybe don't create it.");

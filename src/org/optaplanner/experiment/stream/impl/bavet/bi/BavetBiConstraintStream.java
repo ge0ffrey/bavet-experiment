@@ -2,6 +2,7 @@ package org.optaplanner.experiment.stream.impl.bavet.bi;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
@@ -36,17 +37,19 @@ public abstract class BavetBiConstraintStream<A, B> implements BiConstraintStrea
         nextStreamList.add(stream);
     }
 
-    public BavetBiConstraintStreaming<A, B> buildStreaming(BavetConstraintStreamingSession session) {
+    public BavetBiConstraintStreaming<A, B> buildStreaming(
+            BavetConstraintStreamingSession session, Map<Object, Object> mergeLinkMap) {
         if (nextStreamList.isEmpty()) {
-            return buildStreamingToNext(session, null);
+            return buildStreamingToNext(session, mergeLinkMap, null);
         } else if (nextStreamList.size() == 1) {
             BavetBiConstraintStream<A, B> nextStream = nextStreamList.get(0);
-            return buildStreamingToNext(session, nextStream.buildStreaming(session));
+            return buildStreamingToNext(session, mergeLinkMap, nextStream.buildStreaming(session, mergeLinkMap));
         }
         throw new UnsupportedOperationException(); // TODO support multiple next streams
     }
 
     protected abstract BavetBiConstraintStreaming<A, B> buildStreamingToNext(
-            BavetConstraintStreamingSession session, BavetBiConstraintStreaming<A, B> nextStreaming);
+            BavetConstraintStreamingSession session, Map<Object, Object> mergeLinkMap,
+            BavetBiConstraintStreaming<A, B> nextStreaming);
 
 }

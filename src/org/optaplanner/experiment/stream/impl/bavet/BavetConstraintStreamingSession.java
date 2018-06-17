@@ -1,6 +1,8 @@
 package org.optaplanner.experiment.stream.impl.bavet;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.optaplanner.experiment.stream.impl.ConstraintStreamingSession;
 import org.optaplanner.experiment.stream.impl.bavet.uni.BavetSelectConstraintStream;
@@ -15,8 +17,9 @@ public class BavetConstraintStreamingSession implements ConstraintStreamingSessi
 
     public BavetConstraintStreamingSession(BavetConstraintStreamFactory factory, List<BavetSelectConstraintStream<?>> streamList) {
         this.factory = factory;
+        Map<Object, Object> mergeLinkMap = new HashMap<>(streamList.size() * 3);
         streamings = streamList.stream()
-                .map((BavetSelectConstraintStream<?> stream) -> stream.buildStreaming(this))
+                .map((BavetSelectConstraintStream<?> stream) -> stream.buildStreaming(this, mergeLinkMap))
                 .toArray(BavetSelectConstraintStreaming[]::new);
     }
 

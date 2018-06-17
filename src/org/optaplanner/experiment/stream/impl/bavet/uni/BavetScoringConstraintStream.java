@@ -1,5 +1,7 @@
 package org.optaplanner.experiment.stream.impl.bavet.uni;
 
+import java.util.Map;
+
 import org.optaplanner.experiment.stream.impl.bavet.BavetConstraintStreamFactory;
 import org.optaplanner.experiment.stream.impl.bavet.BavetConstraintStreamingSession;
 
@@ -14,9 +16,10 @@ public class BavetScoringConstraintStream<A> extends BavetConstraintStream<A> {
 
     @Override
     public BavetScoringConstraintStreaming<A> buildStreamingToNext(
-            BavetConstraintStreamingSession session, BavetConstraintStreaming<A> nextStreaming) {
+            BavetConstraintStreamingSession session, Map<Object, Object> mergeLinkMap,
+            BavetConstraintStreaming<A> nextStreaming) {
         if (nextStreaming != null) {
-            throw new IllegalStateException("The stream (" + this + ") has one ore more nextStreams ("
+            throw new IllegalStateException("Impossible state: the stream (" + this + ") has one ore more nextStreams ("
                     + nextStreamList + ") but it's an endpoint.");
         }
         return new BavetScoringConstraintStreaming<A>(constraintName, session);

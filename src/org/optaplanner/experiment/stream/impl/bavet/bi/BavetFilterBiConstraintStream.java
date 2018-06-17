@@ -1,5 +1,6 @@
 package org.optaplanner.experiment.stream.impl.bavet.bi;
 
+import java.util.Map;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
@@ -20,7 +21,8 @@ public class BavetFilterBiConstraintStream<A, B> extends BavetBiConstraintStream
 
     @Override
     public BavetFilterBiConstraintStreaming<A, B> buildStreamingToNext(
-            BavetConstraintStreamingSession session, BavetBiConstraintStreaming<A, B> nextStreaming) {
+            BavetConstraintStreamingSession session, Map<Object, Object> mergeLinkMap,
+            BavetBiConstraintStreaming<A, B> nextStreaming) {
         if (nextStreaming == null) {
             throw new IllegalStateException("The stream (" + this + ") leads to nowhere.\n"
                     + "Maybe don't create it.");

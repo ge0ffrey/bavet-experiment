@@ -9,7 +9,7 @@ public interface ConstraintStream<A> {
 
     ConstraintStream<A> filter(Predicate<A> predicate);
 
-    <B, C> BiConstraintStream<A, B> join(ConstraintStream<B> other, BiJoiner<A, B, C> joiner);
+    <B, R> BiConstraintStream<A, B> join(ConstraintStream<B> other, BiJoiner<A, B, R> joiner);
 
     void scoreEachMatch(String constraintName);
 

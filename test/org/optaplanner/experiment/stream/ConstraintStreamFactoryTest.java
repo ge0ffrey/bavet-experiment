@@ -66,7 +66,8 @@ public class ConstraintStreamFactoryTest {
         session.insert(new Person("Beth"));
         session.insert(new Person("Carl"));
         session.insert(new Person("Dora"));
-        session.insert(new Unavailability("Carl", 2, 4));
+        Unavailability carlUnavailability = new Unavailability("Carl", 2, 4);
+        session.insert(carlUnavailability);
         session.insert(new Unavailability("Dora", 2, 4));
         Shift a = new Shift(1, null);
         session.insert(a);
@@ -78,14 +79,18 @@ public class ConstraintStreamFactoryTest {
         session.insert(d);
         Shift e = new Shift(1, "Carl");
         session.insert(e);
-        Shift f = new Shift(3, "Carl");
+        Shift f = new Shift(2, "Carl");
         session.insert(f);
+        Shift g = new Shift(3, "Carl");
+        session.insert(g);
 
-        assertEquals(-1L, session.calculateScore());
+        assertEquals(-2L, session.calculateScore());
         session.retract(f);
-        assertEquals(0L, session.calculateScore());
-        session.insert(f);
         assertEquals(-1L, session.calculateScore());
+        session.insert(f);
+        assertEquals(-2L, session.calculateScore());
+        session.retract(carlUnavailability);
+        assertEquals(0L, session.calculateScore());
     }
 
 }
