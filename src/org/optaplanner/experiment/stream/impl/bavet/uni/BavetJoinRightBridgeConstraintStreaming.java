@@ -28,7 +28,7 @@ public class BavetJoinRightBridgeConstraintStreaming<A, B, R> extends BavetConst
             throw new IllegalStateException("Impossible situation: the fact (" + b + ") with indexKey (" + indexKey
                     + ") could not be added to the index (" + index.keySet() + ").");
         }
-        biStreaming.insertRight(b);
+        biStreaming.insertRight(b, indexKey);
     }
 
     public void retract(B b) {
@@ -42,15 +42,15 @@ public class BavetJoinRightBridgeConstraintStreaming<A, B, R> extends BavetConst
         if (indexValueList.isEmpty()) {
             index.remove(indexKey);
         }
-        biStreaming.retractRight(b);
+        biStreaming.retractRight(b, indexKey);
     }
 
     public Function<B, R> getMapping() {
         return mapping;
     }
 
-    public List<B> getIndexValueList(R r) {
-        return index.get(r);
+    public List<B> getIndexValueList(R indexKey) {
+        return index.get(indexKey);
     }
 
 }

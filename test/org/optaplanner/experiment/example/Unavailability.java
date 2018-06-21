@@ -2,22 +2,22 @@ package org.optaplanner.experiment.example;
 
 public class Unavailability {
 
-    private String name;
+    private String personName;
     private int timeStart;
     private int timeEnd;
 
-    public Unavailability(String name, int timeStart, int timeEnd) {
-        this.name = name;
+    public Unavailability(String personName, int timeStart, int timeEnd) {
+        this.personName = personName;
         this.timeStart = timeStart;
         this.timeEnd = timeEnd;
     }
 
-    public String getName() {
-        return name;
+    public String getPersonName() {
+        return personName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPersonName(String personName) {
+        this.personName = personName;
     }
 
     public int getTimeStart() {

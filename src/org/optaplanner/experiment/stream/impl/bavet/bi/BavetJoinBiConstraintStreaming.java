@@ -33,33 +33,29 @@ public class BavetJoinBiConstraintStreaming<A, B, R> extends BavetBiConstraintSt
         nextStreaming.retract(a, b);
     }
 
-    public void insertLeft(A a) {
-        R r = leftParentStreaming.getMapping().apply(a);
-        List<B> indexValueList = rightParentStreaming.getIndexValueList(r);
+    public void insertLeft(A a, R indexKey) {
+        List<B> indexValueList = rightParentStreaming.getIndexValueList(indexKey);
         if (indexValueList != null) {
             indexValueList.forEach(b -> insert(a, b));
         }
     }
 
-    public void retractLeft(A a) {
-        R r = leftParentStreaming.getMapping().apply(a);
-        List<B> indexValueList = rightParentStreaming.getIndexValueList(r);
+    public void retractLeft(A a, R indexKey) {
+        List<B> indexValueList = rightParentStreaming.getIndexValueList(indexKey);
         if (indexValueList != null) {
             indexValueList.forEach(b -> retract(a, b));
         }
     }
 
-    public void insertRight(B b) {
-        R r = rightParentStreaming.getMapping().apply(b);
-        List<A> indexValueList = leftParentStreaming.getIndexValueList(r);
+    public void insertRight(B b, R indexKey) {
+        List<A> indexValueList = leftParentStreaming.getIndexValueList(indexKey);
         if (indexValueList != null) {
             indexValueList.forEach(a -> insert(a, b));
         }
     }
 
-    public void retractRight(B b) {
-        R r = rightParentStreaming.getMapping().apply(b);
-        List<A> indexValueList = leftParentStreaming.getIndexValueList(r);
+    public void retractRight(B b, R indexKey) {
+        List<A> indexValueList = leftParentStreaming.getIndexValueList(indexKey);
         if (indexValueList != null) {
             indexValueList.forEach(a -> retract(a, b));
         }
