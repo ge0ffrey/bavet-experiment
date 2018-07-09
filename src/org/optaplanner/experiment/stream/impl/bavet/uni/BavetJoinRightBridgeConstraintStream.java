@@ -25,8 +25,8 @@ public class BavetJoinRightBridgeConstraintStream<A, B, R> extends BavetConstrai
             BavetConstraintStreamingSession session, Map<Object, Object> mergeLinkMap,
             BavetConstraintStreaming<B> nextStreaming) {
         if (nextStreaming != null) {
-            throw new IllegalStateException("Impossible state: the stream (" + this + ") has one ore more nextStreams ("
-                    + nextStreamList + ") but it's a join bridge.");
+            throw new IllegalStateException("Impossible state: the stream (" + this + ") has nextStreams ("
+                    + nextStreamList + ") but it's a bridge.");
         }
         BavetJoinBiConstraintStreaming<A, B, R> biStreaming = (BavetJoinBiConstraintStreaming<A, B, R>) mergeLinkMap.get(biStream);
         if (biStreaming == null) {

@@ -25,8 +25,8 @@ public class BavetJoinRightBridgeConstraintStreaming<A, B, R> extends BavetConst
         R indexKey = mapping.apply(b);
         boolean added = index.computeIfAbsent(indexKey, k -> new ArrayList<>()).add(b);
         if (!added) {
-            throw new IllegalStateException("Impossible situation: the fact (" + b + ") with indexKey (" + indexKey
-                    + ") could not be added to the index (" + index.keySet() + ").");
+            throw new IllegalStateException("Impossible state: the fact (" + b + ") with indexKey (" + indexKey
+                    + ") cannot be added to the index (" + index.keySet() + ").");
         }
         biStreaming.insertRight(b, indexKey);
     }
@@ -36,8 +36,8 @@ public class BavetJoinRightBridgeConstraintStreaming<A, B, R> extends BavetConst
         List<B> indexValueList = index.get(indexKey);
         boolean removed = indexValueList.remove(b);
         if (!removed) {
-            throw new IllegalStateException("Impossible situation: the fact (" + b + ") with indexKey (" + indexKey
-                    + ") could not removed from the index (" + index.keySet() + ").");
+            throw new IllegalStateException("Impossible state: the fact (" + b + ") with indexKey (" + indexKey
+                    + ") cannot be removed from the index (" + index.keySet() + ").");
         }
         if (indexValueList.isEmpty()) {
             index.remove(indexKey);

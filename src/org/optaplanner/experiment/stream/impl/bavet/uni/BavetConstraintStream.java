@@ -3,13 +3,16 @@ package org.optaplanner.experiment.stream.impl.bavet.uni;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 import org.optaplanner.experiment.stream.api.bi.BiConstraintStream;
 import org.optaplanner.experiment.stream.api.bi.BiJoiner;
+import org.optaplanner.experiment.stream.api.collector.ConstraintStreamCollector;
 import org.optaplanner.experiment.stream.impl.bavet.BavetConstraintStreamFactory;
 import org.optaplanner.experiment.stream.impl.bavet.BavetConstraintStreamingSession;
 import org.optaplanner.experiment.stream.api.uni.ConstraintStream;
+import org.optaplanner.experiment.stream.impl.bavet.bi.BavetGroupedBiConstraintStream;
 import org.optaplanner.experiment.stream.impl.bavet.bi.BavetJoinBiConstraintStream;
 
 public abstract class BavetConstraintStream<A> implements ConstraintStream<A> {
@@ -44,6 +47,18 @@ public abstract class BavetConstraintStream<A> implements ConstraintStream<A> {
         BavetJoinRightBridgeConstraintStream<A, B, R> rightBridge = new BavetJoinRightBridgeConstraintStream<>(
                 factory, biStream, joiner.getRightMapping());
         otherStream.nextStreamList.add(rightBridge);
+        return biStream;
+    }
+
+    @Override
+    public <GroupKey_, ResultContainer_, Result_> BiConstraintStream<GroupKey_, Result_> groupBy(
+            Function<A, GroupKey_> groupKeyMapping, ConstraintStreamCollector<A, ResultContainer_, Result_> collector) {
+
+        BavetGroupedBiConstraintStream<GroupKey_, Result_> biStream = new BavetGroupedBiConstraintStream<>(factory);
+        BavetGroupByBridgeConstraintStream<A, GroupKey_, ResultContainer_, Result_> bridge
+                = new BavetGroupByBridgeConstraintStream<>(
+                factory, biStream, groupKeyMapping, collector);
+        nextStreamList.add(bridge);
         return biStream;
     }
 
