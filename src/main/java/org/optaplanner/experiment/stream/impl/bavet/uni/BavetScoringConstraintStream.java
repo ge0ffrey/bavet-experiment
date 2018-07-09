@@ -1,6 +1,7 @@
 package org.optaplanner.experiment.stream.impl.bavet.uni;
 
 import java.util.Map;
+import java.util.function.Function;
 
 import org.optaplanner.experiment.stream.impl.bavet.BavetConstraintStreamFactory;
 import org.optaplanner.experiment.stream.impl.bavet.BavetConstraintStreamingSession;
@@ -8,10 +9,13 @@ import org.optaplanner.experiment.stream.impl.bavet.BavetConstraintStreamingSess
 public class BavetScoringConstraintStream<A> extends BavetConstraintStream<A> {
 
     private final String constraintName;
+    private final Function<A, Long> matchWeighter;
 
-    public BavetScoringConstraintStream(BavetConstraintStreamFactory factory, String constraintName) {
+    public BavetScoringConstraintStream(BavetConstraintStreamFactory factory,
+            String constraintName, Function<A, Long> matchWeighter) {
         super(factory);
         this.constraintName = constraintName;
+        this.matchWeighter = matchWeighter;
     }
 
     @Override
@@ -22,7 +26,7 @@ public class BavetScoringConstraintStream<A> extends BavetConstraintStream<A> {
             throw new IllegalStateException("Impossible state: the stream (" + this + ") has one ore more nextStreams ("
                     + nextStreamList + ") but it's an endpoint.");
         }
-        return new BavetScoringConstraintStreaming<A>(constraintName, session);
+        return new BavetScoringConstraintStreaming<A>(constraintName, matchWeighter, session);
     }
 
 }

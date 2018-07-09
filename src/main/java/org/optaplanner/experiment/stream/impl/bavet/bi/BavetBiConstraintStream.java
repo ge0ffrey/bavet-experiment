@@ -3,6 +3,7 @@ package org.optaplanner.experiment.stream.impl.bavet.bi;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
@@ -33,7 +34,12 @@ public abstract class BavetBiConstraintStream<A, B> implements BiConstraintStrea
 
     @Override
     public void scoreEachMatch(String constraintName) {
-        BavetScoringBiConstraintStream<A, B> stream = new BavetScoringBiConstraintStream<>(factory, constraintName);
+        scoreEachMatch(constraintName, (a, b) -> 1L);
+    }
+
+    @Override
+    public void scoreEachMatch(String constraintName, BiFunction<A, B, Long> matchWeighter) {
+        BavetScoringBiConstraintStream<A, B> stream = new BavetScoringBiConstraintStream<>(factory, constraintName, matchWeighter);
         nextStreamList.add(stream);
     }
 

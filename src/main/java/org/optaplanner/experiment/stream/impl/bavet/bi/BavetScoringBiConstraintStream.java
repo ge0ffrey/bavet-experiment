@@ -1,6 +1,7 @@
 package org.optaplanner.experiment.stream.impl.bavet.bi;
 
 import java.util.Map;
+import java.util.function.BiFunction;
 
 import org.optaplanner.experiment.stream.impl.bavet.BavetConstraintStreamFactory;
 import org.optaplanner.experiment.stream.impl.bavet.BavetConstraintStreamingSession;
@@ -11,10 +12,13 @@ import org.optaplanner.experiment.stream.impl.bavet.uni.BavetScoringConstraintSt
 public class BavetScoringBiConstraintStream<A, B> extends BavetBiConstraintStream<A, B> {
 
     private final String constraintName;
+    private final BiFunction<A, B, Long> matchWeighter;
 
-    public BavetScoringBiConstraintStream(BavetConstraintStreamFactory factory, String constraintName) {
+    public BavetScoringBiConstraintStream(BavetConstraintStreamFactory factory,
+            String constraintName, BiFunction<A, B, Long> matchWeighter) {
         super(factory);
         this.constraintName = constraintName;
+        this.matchWeighter = matchWeighter;
     }
 
     @Override
@@ -25,7 +29,7 @@ public class BavetScoringBiConstraintStream<A, B> extends BavetBiConstraintStrea
             throw new IllegalStateException("Impossible state: the stream (" + this + ") has one ore more nextStreams ("
                     + nextStreamList + ") but it's an endpoint.");
         }
-        return new BavetScoringBiConstraintStreaming<A, B>(constraintName, session);
+        return new BavetScoringBiConstraintStreaming<A, B>(constraintName, matchWeighter, session);
     }
 
 }

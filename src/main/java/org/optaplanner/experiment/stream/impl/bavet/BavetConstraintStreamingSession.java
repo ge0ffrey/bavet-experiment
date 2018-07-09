@@ -40,12 +40,12 @@ public class BavetConstraintStreamingSession implements ConstraintStreamingSessi
 
 
 
-    public void addScore(long addition) {
+    public void insertScore(long addition) {
         score += addition;
     }
 
-    public void removeScore(long subtraction) {
-        score -= subtraction;
+    public void retractScore(long addition) {
+        score += addition;
     }
 
     @Override

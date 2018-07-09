@@ -240,6 +240,49 @@ public class ConstraintStreamFactoryTest {
     }
 
     @Test
+    public void summingStream2() {
+        ConstraintStreamFactory factory = new BavetConstraintStreamFactory();
+
+        factory.select(Shift.class)
+                .groupBy(Shift::getPersonName, ConstraintStreamCollectors.summingLong(Shift::getDifficulty))
+                .filter((personName, difficultySum) -> (difficultySum > 10_000L))
+                .scoreEachMatch("Maximum 10k difficulty per person", (personName, difficultySum) -> (difficultySum - 10_000L));
+
+        ConstraintStreamingSession session = ((InnerConstraintStreamFactory) factory).buildSession();
+
+        session.insert(new Person("Ann"));
+        session.insert(new Person("Beth"));
+        session.insert(new Person("Carl"));
+        session.insert(new Person("Dora"));
+        Shift a = new Shift(1, 100L, null);
+        session.insert(a);
+        Shift b = new Shift(1, 100L, "Ann");
+        session.insert(b);
+        Shift c = new Shift(2, 100L, "Beth");
+        session.insert(c);
+        Shift d = new Shift(2, 2_000L, "Beth");
+        session.insert(d);
+        Shift e = new Shift(1, 100L, "Carl");
+        session.insert(e);
+        Shift f = new Shift(2, 8_000L, "Carl");
+        session.insert(f);
+        Shift g = new Shift(3, 2_000L, "Carl");
+        session.insert(g);
+
+        assertEquals(-100L, session.calculateScore());
+        session.retract(f);
+        assertEquals(0L, session.calculateScore());
+        session.insert(f);
+        assertEquals(-100L, session.calculateScore());
+        session.insert(new Shift(3, 9_000L, "Beth"));
+        assertEquals(-1200L, session.calculateScore());
+
+        // TODO test if 3 shifts of Beth are in the system, the total is their sum
+        // TODO test if 2 shifts of Beth with difficulty 0, the total is 0
+        // TODO test if 0 shifts of Beth end up there, there is no total (no insert)
+    }
+
+    @Test
     public void javaCountStream() {
         long carlCount = Stream.of(
                 new Shift(1, null),

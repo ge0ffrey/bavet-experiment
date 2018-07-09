@@ -1,5 +1,6 @@
 package org.optaplanner.experiment.stream.api.uni;
 
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collector;
@@ -18,5 +19,11 @@ public interface ConstraintStream<A> {
             ConstraintStreamCollector<A, ResultContainer_, Result_> collector);
 
     void scoreEachMatch(String constraintName);
+
+    /**
+     * @param constraintName never null
+     * @param matchWeighter never null, the result of this function (matchWeight) is multiplied by the constraintWeight
+     */
+    void scoreEachMatch(String constraintName, Function<A, Long> matchWeighter);
 
 }

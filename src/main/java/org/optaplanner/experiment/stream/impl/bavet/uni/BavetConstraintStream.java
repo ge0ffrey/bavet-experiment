@@ -64,7 +64,12 @@ public abstract class BavetConstraintStream<A> implements ConstraintStream<A> {
 
     @Override
     public void scoreEachMatch(String constraintName) {
-        BavetScoringConstraintStream<A> stream = new BavetScoringConstraintStream<>(factory, constraintName);
+        scoreEachMatch(constraintName, (a) -> 1L);
+    }
+
+    @Override
+    public void scoreEachMatch(String constraintName, Function<A, Long> matchWeighter) {
+        BavetScoringConstraintStream<A> stream = new BavetScoringConstraintStream<>(factory, constraintName, matchWeighter);
         nextStreamList.add(stream);
     }
 
