@@ -8,7 +8,7 @@ import java.util.function.Supplier;
 import java.util.stream.Collector;
 
 /**
- * Similar to {@link java.util.stream.Collector}, but with disperser (anti-accumulater) functionality and
+ * Similar to {@link java.util.stream.Collector}, but with disperser (inverse of accumulator) functionality and
  * without combiner functionality.
  */
 public interface ConstraintStreamCollector<T, ResultContainer_, Result_> {
