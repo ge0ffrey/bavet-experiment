@@ -26,7 +26,7 @@ public class BavetScoringBiConstraintStream<A, B> extends BavetBiConstraintStrea
             BavetConstraintStreamingSession session, Map<Object, Object> mergeLinkMap,
             BavetBiConstraintStreaming<A, B> nextStreaming) {
         if (nextStreaming != null) {
-            throw new IllegalStateException("Impossible state: the stream (" + this + ") has one ore more nextStreams ("
+            throw new IllegalStateException("Impossible state: the stream (" + this + ") has one or more nextStreams ("
                     + nextStreamList + ") but it's an endpoint.");
         }
         return new BavetScoringBiConstraintStreaming<A, B>(constraintName, matchWeighter, session);

@@ -17,7 +17,7 @@ public interface ConstraintStreamCollector<T, ResultContainer_, Result_> {
 
     BiConsumer<ResultContainer_, T> accumulator();
 
-    BiConsumer<ResultContainer_, T> disperser();
+    BiConsumer<ResultContainer_, T> disperser(); // Reverse accumulator
 
     Function<ResultContainer_, Result_> finisher();
 
